@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Reports — PennyPal{% endblock %}
+{% block content %}
+<section class="page-heading"><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR MONEY PATTERNS</div><h1>Reports & insights</h1><p class="muted">Look back, spot patterns, and keep moving forward.</p></section>
+<section class="report-grid">
+  <article class="panel report-panel"><div class="panel-heading"><div><h2>Monthly overview</h2><p>Income vs expenses, up to the last 6 active months</p></div><span class="panel-badge">₹ INR</span></div>
+  {% if monthly %}
+    <div class="bar-legend"><span><i class="legend-dot income-dot"></i> Income</span><span><i class="legend-dot expense-dot"></i> Expenses</span></div>
+    <div class="monthly-chart">
+      {% for m in monthly %}
+      <div class="month-column"><div class="bar-pair"><div class="bar income-bar" style="height: {{ m.income_pct }}%" title="Income: {{ m.income|money }}"></div><div class="bar expense-bar" style="height: {{ m.expenses_pct }}%" title="Expenses: {{ m.expenses|money }}"></div></div><span>{{ m.month }}</span><small>In {{ m.income|money }} · Out {{ m.expenses|money }}</small></div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><div class="empty-graphic">▥</div><h3>Your report is waiting</h3><p>Add transactions across a month to start seeing patterns.</p><a class="btn btn-primary btn-small" href="{{ url_for('add_transaction') }}">Add transaction</a></div>
+  {% endif %}
+  </article>
+  <article class="panel report-categories"><div class="panel-heading"><div><h2>Expense categories</h2><p>All-time spending by category</p></div></div>
+  {% if categories %}
+    <div class="category-list">{% for c in categories %}<div class="category-item"><div class="category-label"><span>{{ c.category }}</span><strong>{{ c.total|money }}</strong></div><div class="progress-track"><div class="progress-fill fill-{{ loop.index0 % 5 }}" style="width: {{ (c.total / (categories|sum(attribute='total')) * 100) if categories|sum(attribute='total') else 0 }}%"></div></div></div>{% endfor %}</div>
+  {% else %}<div class="empty-state compact"><div class="empty-graphic">◌</div><h3>No expense data yet</h3><p>Record an expense to see your categories.</p></div>{% endif %}
+  </article>
+</section>
+{% endblock %}

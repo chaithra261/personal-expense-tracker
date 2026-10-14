@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}PennyPal — Track your money{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR MONEY, MORE MINDFUL</div>
+    <h1>A clearer view of<br><span>your money story.</span></h1>
+    <p class="hero-description">A simple, colorful space to track your income, understand your spending, and build better money habits — one entry at a time.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="{{ url_for('register') }}">Get started <span>↗</span></a><a class="btn btn-light" href="{{ url_for('login') }}">I already have an account</a></div>
+    <div class="hero-proof"><div class="proof-avatars"><span>✦</span><span>₹</span><span>✓</span></div><p>Small steps. Better money habits.</p></div>
+  </div>
+  <div class="hero-art">
+    <div class="art-spark spark-a">✦</div><div class="art-spark spark-b">✧</div>
+    <div class="preview-card preview-main">
+      <div class="preview-top"><div><small>YOUR BALANCE</small><h2>₹24,850.00</h2></div><span class="trend-pill">↗ 12.8%</span></div>
+      <div class="mini-chart"><div style="height:38%"></div><div style="height:55%"></div><div style="height:44%"></div><div style="height:70%"></div><div style="height:59%"></div><div style="height:84%"></div><div style="height:66%"></div><div style="height:96%"></div><div style="height:76%"></div><div style="height:100%"></div></div>
+      <div class="chart-labels"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span></div>
+      <div class="preview-divider"></div>
+      <div class="preview-bottom"><span class="round-icon green">↗</span><div><strong>Income</strong><small>This month</small></div><b>₹32,500</b></div>
+      <div class="preview-bottom"><span class="round-icon pink">↘</span><div><strong>Expenses</strong><small>This month</small></div><b>₹7,650</b></div>
+    </div>
+    <div class="floating-note note-top"><span class="note-emoji">🌱</span><div><strong>You're growing!</strong><small>Keep it up this month</small></div></div>
+    <div class="floating-note note-bottom"><div class="donut"></div><div><strong>Spending snapshot</strong><small>Know where it goes</small></div></div>
+  </div>
+</section>
+<section class="feature-strip">
+  <div><span class="feature-icon lavender">↗</span><div><strong>Track income</strong><p>Know what comes in.</p></div></div>
+  <div><span class="feature-icon peach">↘</span><div><strong>Log expenses</strong><p>Know what goes out.</p></div></div>
+  <div><span class="feature-icon mint">▥</span><div><strong>See your progress</strong><p>Make informed choices.</p></div></div>
+</section>
+{% endblock %}

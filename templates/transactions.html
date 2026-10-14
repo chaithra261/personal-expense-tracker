@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Transactions — PennyPal{% endblock %}
+{% block content %}
+<section class="page-heading heading-row"><div><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR MONEY JOURNAL</div><h1>Transactions</h1><p class="muted">All the little details that tell your money story.</p></div><a class="btn btn-primary" href="{{ url_for('add_transaction') }}">＋ Add transaction</a></section>
+<section class="panel transactions-panel">
+  <form class="filter-bar" method="get"><input type="search" name="search" placeholder="Search category or description..." value="{{ search }}"><select name="kind"><option value="all" {% if kind=='all' %}selected{% endif %}>All types</option><option value="income" {% if kind=='income' %}selected{% endif %}>Income</option><option value="expense" {% if kind=='expense' %}selected{% endif %}>Expenses</option></select><button class="btn btn-primary btn-small" type="submit">Filter</button><a class="btn btn-light btn-small" href="{{ url_for('transactions') }}">Reset</a></form>
+  {% if transactions %}
+  <div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Type</th><th>Date</th><th>Amount</th><th>Actions</th></tr></thead><tbody>
+  {% for t in transactions %}
+  <tr><td><div class="table-title"><span class="transaction-icon {% if t.kind=='income' %}income-bg{% else %}expense-bg{% endif %}">{% if t.kind=='income' %}↗{% else %}↘{% endif %}</span><div><strong>{{ t.category }}</strong><small>{{ t.description or 'No description' }}</small></div></div></td><td><span class="type-pill {{ t.kind }}">{{ t.kind|title }}</span></td><td>{{ t.transaction_date }}</td><td class="transaction-amount {% if t.kind=='income' %}positive{% else %}negative{% endif %}">{% if t.kind=='income' %}+{% else %}−{% endif %}{{ t.amount|money }}</td><td><div class="table-actions"><a class="icon-action" title="Edit" href="{{ url_for('edit_transaction', transaction_id=t.id) }}">✎</a><form method="post" action="{{ url_for('delete_transaction', transaction_id=t.id) }}" class="delete-form" data-confirm="Delete this transaction?"><button class="icon-action delete-action" title="Delete" type="submit">×</button></form></div></td></tr>
+  {% endfor %}
+  </tbody></table></div>
+  {% else %}
+  <div class="empty-state"><div class="empty-graphic">✧</div><h3>No transactions found</h3><p>Try another filter or add your first transaction.</p><a class="btn btn-primary btn-small" href="{{ url_for('add_transaction') }}">Add transaction</a></div>
+  {% endif %}
+</section>
+{% endblock %}

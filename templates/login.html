@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Log in — PennyPal{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-decoration"><span class="decoration-star">✦</span><div class="auth-illustration"><div class="illustration-circle">₹</div><div class="illustration-line"></div><div class="illustration-card"><span>MONTHLY SAVINGS</span><strong>Growing steadily <b>↗</b></strong><div class="illustration-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><h2>Your next chapter<br>starts with clarity.</h2><p>Good money habits begin with small steps.</p></div>
+  <div class="auth-card"><a class="brand auth-brand" href="{{ url_for('index') }}"><span class="brand-icon">✦</span> PennyPal</a><div class="eyebrow">WELCOME BACK</div><h1>Log in to your account</h1><p class="muted">Pick up where you left off.</p>
+    <form method="post" class="form-stack">
+      <label>Email address<input type="email" name="email" placeholder="you@example.com" required autocomplete="email"></label>
+      <label>Password<input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password"></label>
+      <button class="btn btn-primary btn-full" type="submit">Log in <span>→</span></button>
+    </form>
+    <p class="auth-switch">New to PennyPal? <a href="{{ url_for('register') }}">Create an account</a></p>
+  </div>
+</section>
+{% endblock %}

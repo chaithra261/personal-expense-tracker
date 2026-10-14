@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Edit transaction — PennyPal{% endblock %}
+{% block content %}
+<section class="page-heading"><div class="eyebrow"><span class="eyebrow-dot"></span> MAKE AN UPDATE</div><h1>Edit transaction</h1><p class="muted">Update the details below and save your changes.</p></section>
+<section class="panel edit-panel"><form method="post" class="form-stack transaction-form">
+  <div class="kind-toggle"><label><input type="radio" name="kind" value="expense" {% if transaction.kind=='expense' %}checked{% endif %}><span class="kind-option expense-choice">↘ Expense</span></label><label><input type="radio" name="kind" value="income" {% if transaction.kind=='income' %}checked{% endif %}><span class="kind-option income-choice">↗ Income</span></label></div>
+  <label>Amount (₹)<input type="number" name="amount" min="0.01" step="0.01" value="{{ '%.2f'|format(transaction.amount) }}" required></label>
+  <label>Category<input type="text" name="category" value="{{ transaction.category }}" required maxlength="60"></label>
+  <label>Date<input type="date" name="transaction_date" value="{{ transaction.transaction_date }}" required></label>
+  <label>Description<textarea name="description" rows="3">{{ transaction.description }}</textarea></label>
+  <div class="form-actions"><a class="btn btn-light" href="{{ url_for('transactions') }}">Cancel</a><button class="btn btn-primary" type="submit">Save changes ✓</button></div>
+</form></section>
+{% endblock %}

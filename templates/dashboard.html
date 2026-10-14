@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — PennyPal{% endblock %}
+{% block content %}
+<section class="page-heading heading-row"><div><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR OVERVIEW</div><h1>Hey, {{ session.get('user_name') }} <span class="wave">✦</span></h1><p class="muted">Here's how your money is looking this month.</p></div><a class="btn btn-primary" href="{{ url_for('add_transaction') }}">＋ Add transaction</a></section>
+<form class="month-filter" method="get"><label for="month">Showing month</label><input type="month" id="month" name="month" value="{{ selected_month }}"><button class="btn btn-small btn-light" type="submit">Apply</button></form>
+<section class="stats-grid">
+  <article class="stat-card stat-balance"><div class="stat-top"><span>Available balance</span><span class="stat-symbol">₹</span></div><h2>{{ balance|money }}</h2><p>Income minus expenses</p><div class="stat-decoration">✦</div></article>
+  <article class="stat-card"><div class="stat-top"><span>Total income</span><span class="stat-icon income-icon">↗</span></div><h2>{{ income|money }}</h2><p class="stat-caption"><span class="tiny-dot green-dot"></span> Money received this month</p></article>
+  <article class="stat-card"><div class="stat-top"><span>Total expenses</span><span class="stat-icon expense-icon">↘</span></div><h2>{{ expenses|money }}</h2><p class="stat-caption"><span class="tiny-dot pink-dot"></span> Money spent this month</p></article>
+</section>
+<section class="dashboard-grid">
+  <article class="panel recent-panel"><div class="panel-heading"><div><h2>Recent transactions</h2><p>Your latest money activity</p></div><a class="text-link" href="{{ url_for('transactions') }}">View all ↗</a></div>
+    {% if recent %}
+    <div class="transaction-list">
+      {% for t in recent %}
+      <div class="transaction-row"><span class="transaction-icon {% if t.kind == 'income' %}income-bg{% else %}expense-bg{% endif %}">{% if t.kind == 'income' %}↗{% else %}↘{% endif %}</span><div class="transaction-info"><strong>{{ t.category }}</strong><small>{{ t.description or t.transaction_date }}{% if t.description %} · {{ t.transaction_date }}{% endif %}</small></div><strong class="transaction-amount {% if t.kind == 'income' %}positive{% else %}negative{% endif %}">{% if t.kind == 'income' %}+{% else %}−{% endif %}{{ t.amount|money }}</strong></div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state"><div class="empty-graphic">✧</div><h3>Your story starts here</h3><p>Add your first transaction to see it appear here.</p><a class="btn btn-primary btn-small" href="{{ url_for('add_transaction') }}">Add first transaction</a></div>
+    {% endif %}
+  </article>
+  <article class="panel category-panel"><div class="panel-heading"><div><h2>Where it goes</h2><p>Expense categories this month</p></div><span class="panel-badge">{{ transaction_count }} entries</span></div>
+    {% if categories %}
+      <div class="category-list">
+      {% for c in categories %}
+        <div class="category-item"><div class="category-label"><span>{{ c.name }}</span><strong>{{ c.total|money }}</strong></div><div class="progress-track"><div class="progress-fill fill-{{ loop.index0 % 5 }}" style="width: {{ c.percent }}%"></div></div><small>{{ c.percent }}% of expenses</small></div>
+      {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state compact"><div class="empty-graphic">◌</div><h3>No spending yet</h3><p>Once you add expenses, your categories will show here.</p></div>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}
