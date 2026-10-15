@@ -337,3 +337,10 @@ def reports():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
+
+# Initialize the database when the application starts
+init_db()
+
+if __name__ == "__main__":
+    app.run(debug=True)
